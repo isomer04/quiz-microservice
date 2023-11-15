@@ -2,6 +2,8 @@ package com.isomer.questionservice.controller;
 
 
 import com.isomer.questionservice.model.Question;
+import com.isomer.questionservice.model.QuestionWrapper;
+import com.isomer.questionservice.model.Response;
 import com.isomer.questionservice.service.QuestionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,29 +38,25 @@ public class QuestionController {
         return  questionService.addQuestion(question);
     }
 
+    @GetMapping("generate")
+    public ResponseEntity<List<Integer>> getQuestionsForQuiz
+            (@RequestParam String categoryName, @RequestParam Integer numQuestions ){
+        return questionService.getQuestionsForQuiz(categoryName, numQuestions);
+    }
+
+    @PostMapping("getQuestions")
+    public ResponseEntity<List<QuestionWrapper>> getQuestionsFromId(@RequestBody List<Integer> questionIds){
+        System.out.println(environment.getProperty("local.server.port"));
+        return questionService.getQuestionsFromId(questionIds);
+    }
+
+    @PostMapping("getScore")
+    public ResponseEntity<Integer> getScore(@RequestBody List<Response> responses)
+    {
+        return questionService.getScore(responses);
+    }
 
 
-//    @GetMapping("generate")
-//    public ResponseEntity<List<Integer>> getQuestionsForQuiz
-//            (@RequestParam String categoryName, @RequestParam Integer numQuestions ){
-//        return questionService.getQuestionsForQuiz(categoryName, numQuestions);
-//    }
-//
-//    @PostMapping("getQuestions")
-//    public ResponseEntity<List<QuestionWrapper>> getQuestionsFromId(@RequestBody List<Integer> questionIds){
-//        System.out.println(environment.getProperty("local.server.port"));
-//        return questionService.getQuestionsFromId(questionIds);
-//    }
-//
-//    @PostMapping("getScore")
-//    public ResponseEntity<Integer> getScore(@RequestBody List<Response> responses)
-//    {
-//        return questionService.getScore(responses);
-//    }
 
-
-    // generate
-    // getQuestions (questionid)
-    // getScore
 
 }
